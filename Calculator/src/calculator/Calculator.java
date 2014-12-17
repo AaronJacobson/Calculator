@@ -11,14 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -26,31 +22,120 @@ import javax.swing.text.NumberFormatter;
  */
 public class Calculator extends JFrame implements ActionListener {
 
+    /**
+     * The button that represents the number 1
+     */
     public JButton BUTTON_1;
+
+    /**
+     * The button that represents the number 2
+     */
     public JButton BUTTON_2;
+
+    /**
+     * The button that represents the number 3
+     */
     public JButton BUTTON_3;
+
+    /**
+     * The button that represents the number 4
+     */
     public JButton BUTTON_4;
+
+    /**
+     * The button that represents the number 5
+     */
     public JButton BUTTON_5;
+
+    /**
+     * The button that represents the number 6
+     */
     public JButton BUTTON_6;
+
+    /**
+     * The button that represents the number 7
+     */
     public JButton BUTTON_7;
+
+    /**
+     * The button that represents the number 8
+     */
     public JButton BUTTON_8;
+
+    /**
+     * The button that represents the number 9
+     */
     public JButton BUTTON_9;
+
+    /**
+     * The button that represents the number 0
+     */
     public JButton BUTTON_0;
+
+    /**
+     * The button that represents the subtraction operator
+     */
     public JButton BUTTON_MINUS;
+
+    /**
+     * The button that represents the addition operator
+     */
     public JButton BUTTON_PLUS;
+
+    /**
+     * The button that represents the division operator
+     */
     public JButton BUTTON_DIVIDE;
+
+    /**
+     * The button that represents the multiplication operator
+     */
     public JButton BUTTON_MULTIPLY;
+
+    /**
+     * The button that represents the enter button which makes the calculator calculate what ever is in it
+     */
     public JButton BUTTON_ENTER;
+
+    /**
+     * The button that represents the clear button, when pressed it clears what is on the calculator
+     */
     public JButton BUTTON_CLEAR;
+
+    /**
+     * The text field which displays what is on the calculator
+     */
     public JFormattedTextField TEXT_FIELD;
+
+    /**
+     * The listener which responds to keys being pressed
+     */
     public KL KEY_LISTENER;
 
+    /**
+     * The key adapter which interprets button presses
+     */
     public class KL extends KeyAdapter {
 
+        /**
+         * The list of acceptable characters which are considered numbers
+         */
         public String numbers = "1234567890";
+
+        /**
+         * The list of acceptable characters which are considered operators
+         */
         public String operators = "/+-*";
+
+        /**
+         * The calculator which the key listener refers to
+         */
         public Calculator calc;
 
+        /**
+         * Assigns the calculator which will be used by the key listener
+         * @param calc
+         */
         public KL(Calculator calc) {
             this.calc = calc;
         }
@@ -70,6 +155,12 @@ public class Calculator extends JFrame implements ActionListener {
             }
         }
 
+        /**
+         *
+         * @param c The character to check
+         * @param validList The list to compare the character to
+         * @return Returns if c is in validList
+         */
         public boolean isValid(char c, String validList) {
             boolean toReturn = false;
             for (int currentChar = 0; currentChar < validList.length(); currentChar++) {
@@ -81,14 +172,22 @@ public class Calculator extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Creates the calculator frame and organizes the buttons
+     * @param args
+     */
     public static void main(String[] args) {
         Calculator calc = new Calculator();
+        calc.makeButtons();
         calc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         calc.pack();
         calc.setResizable(false);
         calc.setVisible(true);
     }
 
+    /**
+     * organizes all the things
+     */
     public Calculator() {
         KEY_LISTENER = new KL(this);
         setLayout(new GridBagLayout());
@@ -96,6 +195,12 @@ public class Calculator extends JFrame implements ActionListener {
         TEXT_FIELD.setEditable(false);
         TEXT_FIELD.setText(": ");
         TEXT_FIELD.addKeyListener(KEY_LISTENER);
+    }
+    
+    /**
+     * creates and places all the buttons
+     */
+    public void makeButtons(){
         GridBagConstraints cT = new GridBagConstraints();
         cT.gridx = 0;
         cT.gridy = 0;
@@ -247,6 +352,9 @@ public class Calculator extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Takes what is in the calculator and does math based on the operators it finds
+     */
     public void calculate() {
         String toCalc = TEXT_FIELD.getText();
         int length = 0;
@@ -278,6 +386,10 @@ public class Calculator extends JFrame implements ActionListener {
         TEXT_FIELD.setText(": " + answer);
     }
 
+    /**
+     * Checks to see if there is an operator
+     * @return
+     */
     public boolean checkOperator() {
         char last = TEXT_FIELD.getText().charAt(TEXT_FIELD.getText().length() - 1);
         boolean toReturn = false;
